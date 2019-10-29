@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2010.10.29-单例模式</title>
+  <style>
+    #modal {
+      width: 200px;
+      height: 200px;
+      line-height: 200px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      border: 1px solid #d3d3d3;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <button id="login">登录</button>
+  <button id="close">关闭模态框</button>
+  <script>
+    /*
+    ** 单例模式是保证全局只有一个类并且仅有一个实例
+    ** 重点：判断是否已经创建过实例
+    */
+    const Model = (function() {
+      let modal = null
+      return function() {
+        // 当实例不存在，创建实例
+        if (!modal) {
+          modal = document.createElement('div')
+          modal.innerHTML = '创建一个全局的弹窗'
+          modal.id = 'modal'
+          modal.style.display = 'none'
+          document.body.appendChild(modal)
+        }
+
+        // 当实例存在，直接返回
+        return modal
+      }
+    })();
+
+    document.getElementById('login').addEventListener('click',function() {
+      const modal = new Model()
+      modal.style.display = 'block'
+    })
+
+    document.getElementById('close').addEventListener('click',function() {
+      const modal = new Model()
+      modal.style.display = 'none'
+    })
+  </script>
+</body>
+</html>
